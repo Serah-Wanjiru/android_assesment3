@@ -6,7 +6,6 @@ plugins {
 android {
     namespace 'com.example.assesment3'
     compileSdk 33
-
     defaultConfig {
         applicationId "com.example.assesment3"
         minSdk 24
@@ -32,8 +31,8 @@ android {
     }
     buildFeatures{
         viewBinding true
-
     }
+
 
 }
 

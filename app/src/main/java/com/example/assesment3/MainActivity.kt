@@ -1,10 +1,10 @@
-
 package com.example.assesment3
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.example.assesment3.LoginActivity
 import com.example.assesment3.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -30,14 +30,14 @@ class MainActivity : AppCompatActivity() {
 
 
     fun validateSignUp() {
-        val userName = binding.tvName.text.toString()
-        val phonenumber = binding.tvPhoneNo.text.toString()
-        val email = binding.tvEmail.text.toString()
-        val password = binding.tvPassword.text.toString()
-
+        val firstName = binding.etFirstName.text.toString()
+        val lastName = binding.etLastName.text.toString()
+        val pass = binding.etPassword.text.toString()
+        val confirmPassword = binding.etConfirmPassword.text.toString()
+        val email = binding.etEmail.text.toString()
         var error = false
 
-        if (userName.isBlank()) {
+        if (firstName.isBlank()) {
             binding.tilFirstName.error = "First name is required"
             error = true
         }

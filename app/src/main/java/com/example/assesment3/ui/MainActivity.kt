@@ -1,14 +1,18 @@
-package com.example.assesment3
+package com.example.assesment3.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
-import com.example.assesment3.LoginActivity
+import androidx.activity.viewModels
 import com.example.assesment3.databinding.ActivityMainBinding
+import com.example.assesment3.model.RegisterRequest
+import com.example.assesment3.viewModel.UserViewModel
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
+    private val  userViewModel:UserViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -25,6 +29,15 @@ class MainActivity : AppCompatActivity() {
         }
         binding.btnSignUp.setOnClickListener {
             validateSignUp()
+        }
+        userViewModel.regLiveData.observe(this) { regResponse ->
+            Toast.makeText(this, regResponse.message, Toast.LENGTH_LONG).show()
+            startActivity(Intent(this, LoginActivity::class.java))
+            binding.pbload.visibility = View.GONE
+        }
+        userViewModel.errLiveData.observe(this) { err ->
+            Toast.makeText(this, err, Toast.LENGTH_LONG).show()
+            binding.pbload.visibility = View.GONE
         }
     }
 
@@ -62,7 +75,15 @@ class MainActivity : AppCompatActivity() {
             error = true
         }
         if (!error) {
-            Toast.makeText(this, "$firstName $lastName $email", Toast.LENGTH_LONG).show()
+            var registerRequest=RegisterRequest(
+                firstName=firstName,
+                lastName=lastName,
+                email=email,
+                password = confirmPassword,
+            )
+            binding.pbload.visibility=View.VISIBLE
+            userViewModel.registerUser(registerRequest)
+
 
         }
 
